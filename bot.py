@@ -3,6 +3,8 @@ from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
 import database as db
 from buttons import phone_button_uz, menu, kitob_buy, kitob_delivery, location_btn, payment
 from bts_offices import offices, kitob_post
+from keep_alive import keep_alive
+keep_alive()
 
 BOT_TOKEN = '7927478236:AAEaWaz1v2rNK9W5Oc2cZ7PPRjDhaZZMUHk'
 yandex_group_id = -4736821812
@@ -11,7 +13,7 @@ bts_group_id = -4736821812
 bot = telebot.TeleBot(BOT_TOKEN, parse_mode="HTML")
 
 user_data = {}
-
+amount_to_pay = 0
 
 #---------------registration-------------------
 @bot.message_handler(commands=['start'])
@@ -47,6 +49,7 @@ def contact_handler(message, name):
 #---------------kitob-------------------
 @bot.message_handler(func=lambda message: message.text == "Kitob")
 def books(message):
+    amount_to_pay = 100000
     with open('photos/pick_tasty1.jpg', 'rb') as photo:
         bot.send_photo(message.chat.id, photo, caption=kitob_post, reply_markup=kitob_buy())
 
@@ -174,7 +177,7 @@ def bts_payment(call):
         "Реквизиты для оплаты:\n"
         "Банк: Хумо\n"
         "Номер счета: 1234 5678 9012 3456\n"
-        "Сумма: 20 000 сум\n"
+        f"Сумма: {amount_to_pay}сум\n"
         "\nПосле оплаты отправьте скриншот подтверждения."
     )
     bot.send_message(call.message.chat.id, payment_details, reply_markup=payment())
@@ -208,6 +211,7 @@ def handle_payment_confirmation(message):
                 f"Пользователь: <b>{name}</b>\n"
                 f"Телефон: +{phone_number}\n"
                 f"Username: @{message.from_user.username}\n"
+                f"Сумма для оплаты: {amount_to_pay}сум\n"
                 f"Локация: ⬇️"
             )
             bot.send_photo(yandex_group_id, message.photo[-1].file_id, caption=admin_message, reply_markup=markup)
@@ -220,7 +224,7 @@ def handle_payment_confirmation(message):
                 f"Пользователь: <b>{name}</b>\n"
                 f"Телефон: +{phone_number}\n"
                 f"Username: @{message.from_user.username}\n"
-                f"ID пользователя: {user_id}\n"
+                f"Сумма для оплаты: {amount_to_pay}сум\n"
                 f"Регион: {user_order['region']}\n"
                 f"Офис: {user_order['office']}"
             )
