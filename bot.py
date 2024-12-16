@@ -412,7 +412,7 @@ def handle_payment_confirmation(message):
                 f"Телефон: +{phone_number}\n"
                 f"Username: @{message.from_user.username}\n"
                 f"Сумма для оплаты: {kitob_narxi} сум\n"
-                f"Выбранные уроки: {',\n '.join(selected_courses)}"
+                f"Выбранные уроки: {', '.join(selected_courses)}"
             )
 
             bot.send_photo(
