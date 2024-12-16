@@ -363,7 +363,7 @@ def handle_payment_confirmation(message):
         name = user_info["name"]
         phone_number = user_info["phone_number"]
 
-        bot.send_message(user_id, "Arizangiz administratorga yuborildi. Tez orada siz bilan bog‘lanamiz.")
+        bot.send_message(user_id, "Arizangiz administratorga yuborildi. Tez orada siz bilan bog‘lanamiz.", reply_markup=menu())
 
         # Создаем инлайн-кнопку
         markup = InlineKeyboardMarkup()
