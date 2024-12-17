@@ -1,2 +1,4 @@
 pytelegrambotapi
 flask
+schedule
+requests

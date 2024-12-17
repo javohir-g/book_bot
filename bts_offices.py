@@ -155,7 +155,6 @@ offices = {'Andijon': [
 
 kitob_post = ("Samarali interaktiv metodlar 1.0 kitobi\n\n"
             "narxi 185 000 so'mdan\n")
-kitob_narxi = 0
 
 # Список курсов
 courses = ["video1", "video2", "video3", "video4", "video5",

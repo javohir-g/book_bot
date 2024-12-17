@@ -2,10 +2,17 @@ import telebot
 from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
 import database as db
 from buttons import phone_button_uz, menu, kitob_buy, kitob_delivery, location_btn, payment
-from bts_offices import offices, kitob_post, kitob_narxi, FULL_COURSE_PRICE, SINGLE_VIDEO_PRICE, courses
+from bts_offices import offices, kitob_post, FULL_COURSE_PRICE, SINGLE_VIDEO_PRICE, courses
 
 from keep_alive import keep_alive
 keep_alive()
+
+from request_to_site import schedule_updater
+from threading import Thread
+updater_thread = Thread(target=schedule_updater)
+updater_thread.daemon = True
+updater_thread.start()
+
 
 BOT_TOKEN = '7158493029:AAHs8WxBKJxw9yV4V85L80QoyW4LGBwhYr0'
 book_group_id = -4614622677
@@ -108,7 +115,6 @@ def handle_location(message):
 
 @bot.callback_query_handler(func=lambda call: call.data == "bts_delivery")
 def select_bts_region(call):
-    a = "kitob"
     markup = InlineKeyboardMarkup(row_width=2)
     for region in offices.keys():
         button = InlineKeyboardButton(region, callback_data=f"region_{region}")
